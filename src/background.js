@@ -3,13 +3,19 @@
  * background 插件端
  */
 export default class BGClient{
+	static instance = null
 
 	constructor(){
+
+		if(BGClient.instance){
+			return BGClient.instance
+		}
 
 		this.setting = Object.assign({}, defaultOptions, options)
 		this.portPool = new Map()
 		this.listener = new Set()
 		
+		BGClient.instance = this
 	}
 
 	init(){
