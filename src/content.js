@@ -43,6 +43,18 @@ export default class CTClient{
         
     }
 
+    init(){
+        this.listenePGFn = new Set() 
+        this.listeneBGFn = new Set()
+        this.port = null
+        this.tabName = `${new Date().getTime()}`
+
+        this.ele = document.querySelector(`#${this.setting.ELE}`)
+        this.listenePgMsg()
+
+        return this
+    }
+
     sendObjToPg(type , data){
 
         const [msgStr, err] = createMSg(type, data)
@@ -50,12 +62,16 @@ export default class CTClient{
         if(err){return err}
         
         this.sendStrToPg(msgStr)
+
+        return this
     }
     
     sendStrToPg(msgStr){
         sessionStorage.setItem(this.setting.DATA_SAVE_KEY, msgStr)
         const event = createEvent(this.setting.SEND_TO_PG_KEY, false, false)
         this.ele.dispatchEvent(event)
+
+        return this
     }
 
     listenePgMsg(){
@@ -66,6 +82,7 @@ export default class CTClient{
             listenePGFn.forEach(callback => callback(data, e))
         })
         
+        return this
     }
 
     addPGListener(fn){
@@ -75,6 +92,8 @@ export default class CTClient{
         }
 
         this.listenePGFn.add(fn)
+
+        return this
     }
     
 
@@ -86,7 +105,6 @@ export default class CTClient{
             _this.port = port
             
             port.onMessage.addListener(data =>{ 
-                console.log('bg msg: ', data)
                 if(!_this.port){return}
                 _this.listeneBGFn.forEach(callback => callback(data))
                 
@@ -98,12 +116,14 @@ export default class CTClient{
         this.sendToBgShortMsg(msg, backMsg =>{
             console.log(backMsg)
         })
-       
+        
+        return this
     }
 
 
     sendToBgShortMsg(data){
         chrome.runtime.sendMessage(data)
+        return this
     }
 
 
@@ -119,6 +139,8 @@ export default class CTClient{
             throw `listener fn must be a function: ${fn}`
         }
         this.listeneBGFn.add(fn)
+
+        return this
     }
 
     
