@@ -11,7 +11,6 @@ export default class BGClient{
 			return BGClient.instance
 		}
 
-		this.setting = Object.assign({}, defaultOptions, options)
 		this.portPool = new Map()
 		this.listener = new Set()
 		
