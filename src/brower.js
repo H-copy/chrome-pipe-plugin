@@ -46,12 +46,16 @@ export default class PGClient{
         this.listener = new Set()
         this.ele = document.querySelector(`#${this.setting.ELE}`)
         this.bindListener()
+
+        return this
     }
 
     // 重绑定通信元素
     updateEle(){
         this.ele = document.querySelector(`#${this.setting.ELE}`)
         this.bindListener()
+
+        return this
     }
     
     // 绑定通信事件
@@ -65,6 +69,8 @@ export default class PGClient{
             listener.forEach(callback => callback(data, e))
             
         })
+
+        return this
     }
     
     //  发送
@@ -80,7 +86,8 @@ export default class PGClient{
         sessionStorage.setItem(setting.DATA_SAVE_KEY, msgStr)
         const event = createEvent(setting.SEND_KEY, false, false)
         ele.dispatchEvent(event)
-                
+        
+        return this
     }
 
     // 添加接收
@@ -92,6 +99,7 @@ export default class PGClient{
 
         this.listener.add(fn)
         
+        return this
     }
     
     // 移除接收
@@ -100,11 +108,15 @@ export default class PGClient{
         
         if(!listener.has(fn)){return}
         listener.delete(fn)
+
+        return this
     }
 
     // 清空接收
     clearListener(){
         this.listener.clear()
+
+        return this
     }
     
 }
