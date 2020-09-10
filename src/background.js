@@ -10,7 +10,15 @@ export default class BGClient{
 		this.portPool = new Map()
 		this.listener = new Set()
 		
+	}
+
+	init(){
+		this.portPool = new Map()
+		this.listener = new Set()
+		
 		this.bindListener()
+
+		return this
 	}
 
 	bindListener(){
@@ -18,8 +26,6 @@ export default class BGClient{
 		
 		chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 			const { type, data } = msg
-			
-			console.log( 'sort msg: ', msg )
 			
 			if(type !== 'REGISTER_PORT'){
 				_this.listener.forEach(callback => callback( 'common', msg, sender, sendResponse))
@@ -36,12 +42,13 @@ export default class BGClient{
 				_this.portPool.set(data.name, port)
 				sendResponse({ msg: 'register success !', status: true })
 			} catch (error) {
-				console.log(error)
+				console.error(error)
 				sendResponse({ msg: 'register fail !', status: false })
 			}
-		
 			
 		})
+
+		return this
 	}
 
 	addListener(fn){
@@ -50,6 +57,8 @@ export default class BGClient{
 		}
 		
 		this.listener.add(fn)
+
+		return this
 	}
 	
 	send(type, data){
@@ -63,6 +72,8 @@ export default class BGClient{
 				console.log('port err: ', error)
 			}
 		})
+
+		return this
 	}
 	
 }
