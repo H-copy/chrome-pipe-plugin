@@ -4,7 +4,7 @@
 import CONFIG from './config'
 import {createMSg, createEvent} from './utils'
 
-
+// 默认配置
 const defaultOptions = {
     ELE: CONFIG.ELE,
     SEND_KEY: CONFIG.PG_SEND_KEY,
@@ -12,7 +12,16 @@ const defaultOptions = {
     DATA_SAVE_KEY: CONFIG.DATA_SAVE_KEY,
 }
 
-
+/**
+ * 页面端
+ * 
+ * @param { object } options 配置项
+ *  - ELE: 通信元素 ID
+ *  - SEND_KEY: 发送事件名
+ *  - LISTENER_KEY: 接收事件名
+ *  - DATA_SAVE_KEY: 缓存字段名
+ * 
+ */
 export default class PGClient{
 
     static instance = null
@@ -20,18 +29,23 @@ export default class PGClient{
     constructor(options={}){
 
         // 单例模式
-        if(PageClient.instance){
-            return PageClient.instance
+        if(PGClient.instance){
+            return PGClient.instance
         }
 
         this.setting = Object.assign({}, defaultOptions, options)
         
-        this.ele = document.querySelector(`#${this.setting.ELE}`)
+        this.ele = null
         this.listener = new Set()
-        this.bindListener()
 
-        PageClient.instance = this
+        PGClient.instance = this
                 
+    }
+
+    init(){
+        this.listener = new Set()
+        this.ele = document.querySelector(`#${this.setting.ELE}`)
+        this.bindListener()
     }
 
     // 重绑定通信元素
@@ -53,7 +67,7 @@ export default class PGClient{
         })
     }
     
-    // 发送
+    //  发送
     send(type, data={}){   
         
         const { ele, setting } = this

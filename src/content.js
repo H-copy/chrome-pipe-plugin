@@ -15,7 +15,10 @@ const defaultOptions = {
     LISTENER_BG_KEY: CONFIG.BG_LISTENER_KEY,
 }
 
-
+/**
+ * content 注入端
+ * @param { object } options
+ */
 export default class CTClient{
 
     static instance = null
@@ -35,8 +38,6 @@ export default class CTClient{
         this.tabName = `${new Date().getTime()}`
 
         this.listenePgMsg()
-        // this.listeneBGMsg()
-        
 
         ContentClient.instance = this
         
@@ -64,7 +65,6 @@ export default class CTClient{
             const data = JSON.parse(sessionStorage.getItem(setting.DATA_SAVE_KEY))
             listenePGFn.forEach(callback => callback(data, e))
         })
-        
         
     }
 
@@ -94,6 +94,7 @@ export default class CTClient{
             
         })
         
+        // 发起注册
         this.sendToBgShortMsg(msg, backMsg =>{
             console.log(backMsg)
         })

@@ -4,7 +4,7 @@ module.exports = {
 
     input: 'src/main.js',
     output: {
-        file: 'dist/main.js',
+        file: 'lib/index.js',
         format: 'umd',
         name: 'chrome-pip'
     },

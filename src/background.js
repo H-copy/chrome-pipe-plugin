@@ -1,7 +1,12 @@
+
+/**
+ * background 插件端
+ */
 export default class BGClient{
 
 	constructor(){
 
+		this.setting = Object.assign({}, defaultOptions, options)
 		this.portPool = new Map()
 		this.listener = new Set()
 		
@@ -41,7 +46,7 @@ export default class BGClient{
 
 	addListener(fn){
 		if(typeof fn !== 'function'){
-            throw `listener fn must be a function: ${fn}`
+      throw `listener fn must be a function: ${fn}`
 		}
 		
 		this.listener.add(fn)
