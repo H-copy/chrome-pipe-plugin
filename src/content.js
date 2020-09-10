@@ -25,8 +25,8 @@ export default class CTClient{
 
     constructor(options){
 
-        if(ContentClient.instance){
-            return ContentClient.instance
+        if(CTClient.instance){
+            return CTClient.instance
         }
 
         this.setting = Object.assign({}, defaultOptions, options)
@@ -39,7 +39,7 @@ export default class CTClient{
 
         this.listenePgMsg()
 
-        ContentClient.instance = this
+        CTClient.instance = this
         
     }
 

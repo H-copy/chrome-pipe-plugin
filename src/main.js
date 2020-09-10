@@ -1,3 +1,10 @@
-export PGClient from './brower'
-export CTClient from './content'
-export BGClient from './background'
+import PGClient from './brower'
+import CTClient from './content'
+import BGClient from './background'
+
+
+export default {
+  PGClient,
+  CTClient,
+  BGClient
+}

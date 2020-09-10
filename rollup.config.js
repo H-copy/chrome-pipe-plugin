@@ -4,9 +4,9 @@ module.exports = {
 
     input: 'src/main.js',
     output: {
-        file: 'lib/index.js',
+        file: 'lib/index.js', 
         format: 'umd',
-        name: 'chrome-pip'
+        name: 'chrome-pipe-plugin'
     },
     plugins: [ babel({exclude: 'node_modules/**'}) ]
 
