@@ -1,6 +1,6 @@
 {
   "name": "chrome-pipe-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "chrome 插件通信工具包",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
