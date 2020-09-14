@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "chrome 插件通信工具包",
   "main": "lib/index.js",
-  "module": "lib/index.js",
+  "module": "bin/index.js",
   "scripts": {
     "dev": "rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js"
