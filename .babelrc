@@ -3,13 +3,17 @@
     [
       "@babel/preset-env",
       {
-        "modules": false
+        "modules": false,
+        "useBuiltIns": "usage",
+        "corejs": "2.6.10"
       }
     ]
   ],
   "plugins": [
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-classes",
-    "@babel/plugin-proposal-export-default-from"
-  ]
+    ["@babel/plugin-transform-runtime"],
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "ignore": [
+      "node_modules/**"
+    ]
 }
