@@ -1,3 +1,5 @@
 /node_modules/
 /dist/
 /lib/
+/bin/
+/example/**/node_modules/
