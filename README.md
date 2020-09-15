@@ -225,7 +225,7 @@ c.addListener(fn_1)
 
   
 
-- BGClinet
+- BGClient
 
   - init  初始化 `() => BGClient`
   - bindListener 绑定监听 `() => BGClient`
