@@ -43,23 +43,24 @@ export default class PGClient{
 	}
 
 	init(){
-		this.listener = new Set()
 		this.ele = document.querySelector(`#${this.setting.ELE}`)
+		this.clearListener()
 		this.bindListener()
 
 		return this
 	}
 
 	// 重绑定通信元素
-	updateEle(){
-		this.ele = document.querySelector(`#${this.setting.ELE}`)
+	updateEle(ele){
+		this.setting.ELE = ele
+		this.ele = document.querySelector(`#${ele}`)
 		this.bindListener()
 
 		return this
 	}
 	
 	// 绑定通信事件
-	bindListener(){
+	bindListener(){	
 
 		const { ele, setting, listener } = this
 		
@@ -114,8 +115,9 @@ export default class PGClient{
 
 	// 清空接收
 	clearListener(){
-		this.listener.clear()
-
+		const { ele, listener, setting } = this
+		listener.clear()
+		ele.removeEventListener(setting.LISTENER_KEY)
 		return this
 	}
 	

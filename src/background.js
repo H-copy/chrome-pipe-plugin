@@ -31,7 +31,6 @@ export default class BGClient{
 		
 		chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 			const { type, data } = msg
-			
 			if(type !== 'REGISTER_PORT'){
 				_this.listener.forEach(callback => callback( 'common', msg, sender, sendResponse))
 				return
@@ -39,7 +38,6 @@ export default class BGClient{
 			
 			try {
 				const port = chrome.tabs.connect(sender.tab.id, {name: data.name})
-
 				port.onMessage.addListener(data =>{
 					_this.listener.forEach(callback => callback( 'port', data, port))
 				})
@@ -68,7 +66,6 @@ export default class BGClient{
 	
 	send(type, data){
 		const _this = this
-
 		_this.portPool.forEach((port, key) => {
 			try {
 				port.postMessage({type, data})

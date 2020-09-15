@@ -1575,8 +1575,6 @@ var DEFAULT_CONF = {
   // 页面发送事件名
   CONTENT_SEND_KEY: 'CONTENT_TO_PG',
   // content发送事件名，既页面接受事件
-  BG_LISTENER_KEY: 'LISTENER_BG',
-  BG_SEND_KEY: 'SEND_TO_BG_FROM_CONTENT',
   DATA_SAVE_KEY: 'CHROME_PLUGIN_PIP' // sessionStorage 数据缓存字段
 
 };
@@ -1647,16 +1645,17 @@ var PGClient = /*#__PURE__*/function () {
   createClass(PGClient, [{
     key: "init",
     value: function init() {
-      this.listener = new Set();
       this.ele = document.querySelector("#".concat(this.setting.ELE));
+      this.clearListener();
       this.bindListener();
       return this;
     } // 重绑定通信元素
 
   }, {
     key: "updateEle",
-    value: function updateEle() {
-      this.ele = document.querySelector("#".concat(this.setting.ELE));
+    value: function updateEle(ele) {
+      this.setting.ELE = ele;
+      this.ele = document.querySelector("#".concat(ele));
       this.bindListener();
       return this;
     } // 绑定通信事件
@@ -1725,7 +1724,11 @@ var PGClient = /*#__PURE__*/function () {
   }, {
     key: "clearListener",
     value: function clearListener() {
-      this.listener.clear();
+      var ele = this.ele,
+          listener = this.listener,
+          setting = this.setting;
+      listener.clear();
+      ele.removeEventListener(setting.LISTENER_KEY);
       return this;
     }
   }]);
@@ -1737,9 +1740,7 @@ var defaultOptions$1 = {
   ELE: DEFAULT_CONF.ELE,
   SEND_TO_PG_KEY: DEFAULT_CONF.CONTENT_SEND_KEY,
   LISTENER_PG_KEY: DEFAULT_CONF.PG_SEND_KEY,
-  DATA_SAVE_KEY: DEFAULT_CONF.DATA_SAVE_KEY,
-  SEND_TO_BG_KEY: DEFAULT_CONF.BG_SEND_KEY,
-  LISTENER_BG_KEY: DEFAULT_CONF.BG_LISTENER_KEY
+  DATA_SAVE_KEY: DEFAULT_CONF.DATA_SAVE_KEY
 };
 /**
  * content 注入端
@@ -2025,4 +2026,24 @@ var main = {
   BGClient: BGClient
 };
 
-console.log('content: ', main.CTClient);
+const c = new main.CTClient({
+  ELE: 'pip'
+});
+c.init();
+c.registerPort();
+c.addPGListener(data => {
+  console.log(`CT get msg from PG: ${JSON.stringify(data, null, 2)}`);
+  setTimeout(() => {
+    c.sendObjToPg("CT", {
+      t: new Date().getTime()
+    });
+  }, 1000);
+  setTimeout(() => {
+    c.sendToBgLongMsg({
+      msg: 'is BG ?'
+    });
+  }, 2000);
+});
+c.addBgListener(data => {
+  console.log(`CT get msg from BG: ${JSON.stringify(data, null, 2)}`);
+});

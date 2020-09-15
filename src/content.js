@@ -9,10 +9,7 @@ const defaultOptions = {
   ELE: CONFIG.ELE,
   SEND_TO_PG_KEY: CONFIG.CONTENT_SEND_KEY,
   LISTENER_PG_KEY: CONFIG.PG_SEND_KEY,
-  DATA_SAVE_KEY: CONFIG.DATA_SAVE_KEY,
-  
-  SEND_TO_BG_KEY: CONFIG.BG_SEND_KEY,
-  LISTENER_BG_KEY: CONFIG.BG_LISTENER_KEY,
+  DATA_SAVE_KEY: CONFIG.DATA_SAVE_KEY
 }
 
 /**
@@ -80,7 +77,6 @@ export default class CTClient{
     const msg = { type: 'REGISTER_PORT', data:{ name: _this.tabName } }  
     chrome.runtime.onConnect.addListener(port =>{
       _this.port = port
-      
       port.onMessage.addListener(data =>{ 
         if(!_this.port){return}
         _this.listeneBGFn.forEach(callback => callback(data))
