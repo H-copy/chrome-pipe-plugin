@@ -18,6 +18,7 @@
   "files": [
     "src",
     "lib",
+    "bin",
     "package.json"
   ],
   "author": "copy-left",
