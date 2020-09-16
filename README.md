@@ -11,7 +11,7 @@
 ### Install 🔌
 
 ```shell
-cnpm i --save chrome-plugin-pipe
+cnpm i --save chrome-pipe-plugin
 ```
 
 
